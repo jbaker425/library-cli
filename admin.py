@@ -165,7 +165,7 @@ def update(tableName):
 					data = (nameInput, addrInput, phoneInput, pKey)
 				elif tableName == 'tbl_library_branch':
 					stmt = "UPDATE tbl_library_branch SET branchName = %s, branchAddress = %s WHERE branchId = %s;"
-					data = (nameInput, addrInput, phoneInput, pKey)
+					data = (nameInput, addrInput, pKey)
 				elif tableName == 'tbl_borrower':
 					stmt = "UPDATE tbl_borrower SET name = %s, address = %s, phone = %s WHERE cardNo = %s;"
 					data = (nameInput, addrInput, phoneInput, pKey)
@@ -213,15 +213,15 @@ def delete(tableName):
 					if tableName == 'tbl_publisher':
 						#Delete the chosen row from the database
 						stmt = "DELETE FROM tbl_publisher WHERE publisherId = %s;"
-						data = (pKey)
+						data = (pKey,)
 					elif tableName == 'tbl_library_branch':
 						#Delete the chosen row from the database
 						stmt = "DELETE FROM tbl_library_branch WHERE branchId = %s;"
-						data = (pKey)
+						data = (pKey,)
 					elif tableName == 'tbl_borrower':
 						#Delete the chosen row from the database
 						stmt = "DELETE FROM tbl_borrower WHERE cardNo = %s;"
-						data = (pKey)
+						data = (pKey,)
 					#Send SQL statement to the database
 					try:
 						mycursor.execute(stmt, data)
@@ -537,15 +537,12 @@ def overrideDueDate():
 							#Grab specific row based on selection
 							loanInp = int(loanInp)
 							if loanInp != loanCount + 1:
-								print(f"borLoans:{borLoans}")
 								loan = borLoans[loanInp-1]
 								#Show user current due date
 								#**Maybe clean up how the date is displayed
 								print(f"\nThis borrower has a due date of: {loan[4]}")
 								#User inputs date or quits
 								newDate = input("Please input new date (yyyy-mm-dd), enter 'quit' if no change:\n")
-								print(f"\nnewDate:{newDate}\n")
-								print(f"\nloan:{loan}\n")
 								
 								if newDate in ('quit', 'QUIT', 'Quit', 'Q', 'q'):
 									print("\nMoving to previous menu ...")
